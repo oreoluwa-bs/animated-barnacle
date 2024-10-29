@@ -5,13 +5,13 @@ type TableFilters = {
   limit: number;
 };
 
-const rowsKey: { header: string; value: (d: Ticker) => string }[] = [
-  { header: "💰 Coin", value: (d) => d.name },
-  { header: "📄 Code", value: (d) => d.symbol },
-  { header: "🤑 Price", value: (d) => "$" + d.price_usd },
+const rowsKey: { header: string; getValue: (d: Ticker) => string }[] = [
+  { header: "💰 Coin", getValue: (d) => d.name },
+  { header: "📄 Code", getValue: (d) => d.symbol },
+  { header: "🤑 Price", getValue: (d) => "$" + d.price_usd },
   {
     header: "📉 Total Supply",
-    value: (d) =>
+    getValue: (d) =>
       `${new Intl.NumberFormat("en-US", { maximumSignificantDigits: 3 }).format(Number(d.tsupply))} ${d.symbol}`,
   },
 ];
@@ -75,15 +75,15 @@ async function renderCoinloreTableData(filter: TableFilters) {
           <div class="coinlore-table__row--mobile">
             <div>
               <dt>${k.header}</dt>
-              <dd>${k.value(coin)}</dd>
+              <dd>${k.getValue(coin)}</dd>
             </div>
             <div>
               <dt>${rowsKey[3].header}</dt>
-              <dd>${rowsKey[3].value(coin)}</dd>
+              <dd>${rowsKey[3].getValue(coin)}</dd>
             </div>
           </div>
           <div class="coinlore-table__row--desktop">
-          ${k.value(coin)}
+          ${k.getValue(coin)}
           </div>
           </div>
           `;
@@ -117,10 +117,10 @@ function renderCoinloreTablePagination() {
 
   nextPaginationButton.innerHTML =
     "Next <i class='ph-bold ph-arrow-right'></i>";
-  nextPaginationButton.addEventListener("click", renderCoinloreTableNextPage);
+  nextPaginationButton.addEventListener("click", handleCoinloreTableNextPage);
 
   prevPaginationButton.innerHTML = "<i class='ph-bold ph-arrow-left'></i> Prev";
-  prevPaginationButton.addEventListener("click", renderCoinloreTablePrevPage);
+  prevPaginationButton.addEventListener("click", handleCoinloreTablePrevPage);
 
   coinlorePagination.innerHTML = "";
   coinlorePagination.append(
@@ -129,7 +129,7 @@ function renderCoinloreTablePagination() {
   );
 }
 
-function renderCoinloreTableNextPage() {
+function handleCoinloreTableNextPage() {
   page = page + 1;
 
   renderCoinloreTableData({ page, limit }).then(() => {
@@ -142,7 +142,7 @@ function renderCoinloreTableNextPage() {
   });
 }
 
-function renderCoinloreTablePrevPage() {
+function handleCoinloreTablePrevPage() {
   page = Math.max(page - 1, 1);
   renderCoinloreTableData({ page, limit }).then(() => {
     window.history.pushState(
