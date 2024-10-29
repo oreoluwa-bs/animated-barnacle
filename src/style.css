@@ -1,0 +1,117 @@
+:root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    --background-color: #cecece;
+    --table-background-color: #fff;
+    --text-color: rgba(0, 0, 0, 0.87);
+    --stripe-color: var(--background-color);
+    --shadow: 10px 10px 32px 3px rgba(0, 0, 0, 0.22);
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: inherit;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    padding: 1rem;
+}
+
+.coinlore-table__container {
+    background-color: var(--table-background-color);
+    max-width: 650px;
+    margin: 50px auto 0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.coinlore-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: auto;
+}
+
+.coinlore-table__striped tbody tr:nth-of-type(odd) {
+    background-color: var(--stripe-color);
+}
+
+.coinlore-table td,
+.coinlore-table th {
+    padding: 8px 8px;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.coinlore-table td:nth-child(3),
+.coinlore-table td:nth-child(4),
+.coinlore-table thead {
+    display: none;
+}
+
+.coinlore-table__row--desktop {
+    display: none;
+}
+
+.coinlore-table__row--mobile {
+    display: grid;
+    gap: 1rem;
+}
+.coinlore-table__row--mobile dt {
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+.coinlore-table__row--mobile dd {
+    margin: 0;
+}
+
+.coinlore-table__pagination {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 8px;
+}
+
+.coinlore-table__pagination button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: transparent;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .coinlore-table thead {
+        display: table-header-group;
+    }
+
+    .coinlore-table td:nth-child(3),
+    .coinlore-table td:nth-child(4) {
+        display: table-cell;
+    }
+    .coinlore-table td .coinlore-table__row--mobile {
+        display: none;
+    }
+    .coinlore-table td .coinlore-table__row--desktop {
+        display: block;
+    }
+}
